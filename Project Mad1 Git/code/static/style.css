@@ -1,0 +1,35 @@
+#main, #canvas{
+    border: 2px solid black;
+    position: relative;
+}
+*{margin: 0px }
+#main{
+    margin: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    width: 90%;
+    height: 90%;
+    background-color: #ffdbe3   ;
+    text-align: center;
+    align-self: center;
+}
+
+#canvas{
+    margin: auto;
+    width: 60%;
+    height: 80%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: hsl(281, 100%, 92%);
+}
+#form-body{
+    border: 1.4px solid black;
+    width: 50%;
+    height: 70%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-style:"Times New Roman", Times, serif ;
+}

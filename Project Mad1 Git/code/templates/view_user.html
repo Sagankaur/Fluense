@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div id="main">
+        <h2>User Details for {{ user.username }}</h2>
+        <div id="canvas">
+        {% if user.type == 'influencer' %}
+            <h2>Influencer Profile</h2>
+            {% if user.influencer.profile_pic %}
+                <img src="{{ url_for('static', filename='uploads/' + user.influencer.profile_pic) }}" alt="Profile Picture" class="img-fluid rounded-square" style="max-width: 100px">
+            {% else %}
+                <img src="{{ url_for('static', filename='default-profile-pic.png') }}" alt="Default Profile Picture" class="img-fluid rounded-square" style="max-width: 100px; height: auto; border-radius: 15%">
+            {% endif %}   
+            <p><strong>Name:</strong> {{ user.influencer.name }}</p>
+            <p><strong>Email:</strong> {{ user.influencer.email }}</p>
+            <p><strong>Phone:</strong> {{ user.influencer.phone }}</p>
+            <p><strong>Category:</strong> {{ user.influencer.category }}</p>
+            <p><strong>Niche:</strong> {{ user.influencer.niche }}</p>
+            <p><strong>Followers:</strong> {{ user.influencer.flw }}</p>
+            <p><strong>Platform Presence:</strong> {{ user.influencer.platform_presence }}</p>
+        {% elif user.type == 'sponsor' %}
+            <h2>Sponsor Profile</h2>
+            <p><strong>Company Name:</strong> {{ user.sponsor.name }}</p>
+            <p><strong>Email:</strong> {{ user.sponsor.email }}</p>
+            <p><strong>Phone:</strong> {{ user.sponsor.phone }}</p>
+            <p><strong>Industry:</strong> {{ user.sponsor.industry }}</p>
+            <p><strong>Campaigns:</strong> 
+            <ul>
+                {% for camp in user.sponsor.camps %}
+                    {% if camp.visibility == 'public' %}
+                    <li>{{ camp.title }} - Status: {{ camp.status }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            </p>
+        {% else %}
+            <p>Invalid user type.</p>
+        {% endif %}
+        
+        {% if user.flag %}
+        <p><strong>Flag!</strong> User is flagged</p>
+        {% endif %}
+        
+        {% if current_user.type == 'sponsor' and user.type == 'influencer' %}
+            <a href="/send_request/{{ user.id }}" class="btn btn-warning"  role="button" >Send Request</a>
+        {% endif %}
+
+        </div>
+    </div>
+</body>
+</html>

@@ -137,11 +137,11 @@ def influencer_profile_dashboard(user_id):
         return "Influencer details not found"
     accept_req = Ad_request.query.filter_by(influencer_id=user_id, status='Accepted').all()
     new_requests = Ad_request.query.filter_by(influencer_id=user_id, status='Pending').all()
+    earnings= 0
     for req in accept_req:
         if req:
             earnings = sum((req.pay.strip()))
-        else: 
-            earnings= 0
+    
     reach=len(accept_req)
     
     return render_template('influencer_profile_dashboard.html',  u_name=user.username,

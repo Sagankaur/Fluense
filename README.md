@@ -2,6 +2,8 @@
 
 Fluense is a server-rendered Flask application for coordinating sponsorship campaigns between brands and social-media influencers. I built it as an Application Development I course project in the IIT Madras BS program.
 
+![Runtime screenshot of the Fluense Flask application](docs/screenshots/runtime-home.png)
+
 ## Product scope
 
 The application models three roles:

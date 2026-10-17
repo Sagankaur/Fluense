@@ -8,9 +8,8 @@ import numpy as np
 from flask import current_app as app
 from sqlalchemy import and_
 from .models import *
+from .security import hash_password, verify_password_and_upgrade
 from flask import session
-app.config['SECRET_KEY'] = 'your_secret_key_here'
-app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static/uploads') 
 #app=None
 
 @app.route("/",methods=["GET","POST"])
@@ -22,7 +21,7 @@ def user_login():
         this_user= User.query.filter_by(username = u_name).first()
         print (f'Login for u_name={u_name}') 
         if this_user:
-            if this_user.password == pwd:
+            if verify_password_and_upgrade(this_user, pwd):
                 if not(this_user.flag):
                     session['username'] = this_user.username
                     if this_user.type.lower() == 'influencer':
@@ -70,8 +69,8 @@ def influencer_register():
         if this_user:
             return 'Username already exists'
         else:
-            new_user = User(username=u_name, 
-                            password=pwd, 
+            new_user = User(username=u_name,
+                            password=hash_password(pwd),
                             type='influencer')
             db.session.add(new_user)
             db.session.commit()  # Commit to get the new user ID
@@ -107,7 +106,7 @@ def sponsor_register():
         if this_user:
             return 'user name already exists'
         else:
-            new_user = User(username=u_name, password=pwd, type='sponsor')
+            new_user = User(username=u_name, password=hash_password(pwd), type='sponsor')
             db.session.add(new_user)
             db.session.commit()  # Commit to get the new user ID
             session['username'] = new_user.username

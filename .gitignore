@@ -1,0 +1,7 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+Project Mad1 Git/code/static/uploads/
+Project Mad1 Git/code/instance/*.sqlite3-journal
